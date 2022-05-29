@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using AexSoftTest.Views;
+using Xamarin.Forms;
 
 namespace AexSoftTest
 {
@@ -8,8 +9,8 @@ namespace AexSoftTest
         {
             InitializeComponent();
 
-            //MainPage = new CollectionBookView();
             MainPage = new MainPage();
+            //MainPage = new LoginPage();
         }
 
         protected override void OnStart()

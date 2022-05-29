@@ -10,12 +10,12 @@ namespace Business.Mappers
         {
             BookBusinessModel newItem = new BookBusinessModel
             {
+                Id = oldItem.Id,
                 Name = oldItem.Name,
                 Autor = oldItem.Autor,
                 CoverView = oldItem.CoverView,
                 Shelf = oldItem.Shelf,
-                Genre = oldItem.Shelf,
-                Id = oldItem.Id,
+                Genre = oldItem.Genre,
                 Rack = oldItem.Rack,
                 Row = oldItem.Row
             };
@@ -42,7 +42,7 @@ namespace Business.Mappers
                 Autor = oldItem.Autor,
                 CoverView = oldItem.CoverView,
                 Shelf = oldItem.Shelf,
-                Genre = oldItem.Shelf,
+                Genre = oldItem.Genre,
                 Id = oldItem.Id,
                 Rack = oldItem.Rack,
                 Row = oldItem.Row

@@ -259,15 +259,15 @@ namespace AexSoftTest.ViewModels
         {
             if (SearchBy == "Названию")
             {
-                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Name.Split(' ').Any(word => word.ToLower() == textQuery.ToLower())));
+                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Name.Split(' ', ',').Any(word => word.ToLower() == textQuery.ToLower())));
             }
             else if (SearchBy == "Автору")
             {
-                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Autor.Split(' ').Any(word => word.ToLower() == textQuery.ToLower())));
+                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Autor.Split(' ', ',', '.').Any(word => word.ToLower() == textQuery.ToLower())));
             }
             else
             {
-                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Genre.Split(' ').Any(word => word.ToLower() == textQuery.ToLower())));
+                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Genre.Split(' ', ',').Any(word => word.ToLower() == textQuery.ToLower())));
             }
         }
     }

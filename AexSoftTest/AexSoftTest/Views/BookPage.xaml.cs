@@ -28,7 +28,7 @@ namespace AexSoftTest.Views
 
         public async void OnTest(object sender, EventArgs e)
         {
-            string searchOption = await DisplayActionSheet("Искать по:", "Отмена", "Ок", "Названию", "Автору", "Жанру");
+            string searchOption = await DisplayActionSheet("Искать по:", "Отмена", null, "Названию", "Автору", "Жанру");
             _bookPageViewModel.SearchBy = searchOption;
         }
     }
