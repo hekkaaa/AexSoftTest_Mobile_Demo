@@ -9,12 +9,7 @@
             <ShellContent ContentTemplate="{DataTemplate local:BookPage}" />
         </Tab>
     </FlyoutItem>
-    <!--<FlyoutItem Title="Выход">
-        <Tab>
-            <ShellContent Route="AboutPage" ContentTemplate="{DataTemplate local:LoginPage}" />
-        </Tab>
-    </FlyoutItem>-->
-
+    
     <MenuItem Text="Выход" Clicked="ExitForProfileApplication"/>
     <TabBar>
         <ShellContent Route="LoginPage" ContentTemplate="{DataTemplate local:LoginPage}" />
