@@ -1,14 +1,13 @@
 ﻿using Business.Helpers;
+using Data.ConnectDb;
 using Data.Entities;
 using Data.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Business.Services
 {
     public class UserService
-    {   
+    {
         private readonly UserRepository _userRepository;
 
         public UserService()
@@ -17,11 +16,11 @@ namespace Business.Services
         }
 
         public bool AddUser(string login, string password)
-        {   
+        {
             string newHashPassword = ConvertPassHash.ConvertHash(password);
             User chechDublicate = _userRepository.GetUserByName(login);
 
-            if(chechDublicate != null)
+            if (chechDublicate != null)
             {
                 throw new ArgumentException("Такой юзерe уже есть");
             }
@@ -34,6 +33,7 @@ namespace Business.Services
             }
             else
             {
+                ConnectSettings.RenameDatabaseUser(login.ToLower());
                 return true;
             }
         }
@@ -42,14 +42,15 @@ namespace Business.Services
         {
             User res = _userRepository.GetUserByName(login);
             string tmpHashPass = ConvertPassHash.ConvertHash(password);
-            if(res == null)
+            if (res == null)
             {
                 return false;
             }
-            if(tmpHashPass != res.Password)
+            if (tmpHashPass != res.Password)
             {
                 return false;
             }
+            ConnectSettings.RenameDatabaseUser(login.ToLower());
             return true;
         }
     }

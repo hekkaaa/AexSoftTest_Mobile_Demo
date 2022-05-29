@@ -2,6 +2,7 @@
 using AexSoftTest.Models;
 using AexSoftTest.Views;
 using Business.Services;
+using Data.ConnectDb;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -123,6 +124,8 @@ namespace AexSoftTest.ViewModels
 
         public ICommand CreateItemCommand => new Command(() =>
         {
+            var s = ConnectSettings.PathDatabaseUser;
+            var s1 = ConnectSettings.PathDatabaseCollection;
             Navigation.PushAsync(new NewItemPage(this));
         });
 
