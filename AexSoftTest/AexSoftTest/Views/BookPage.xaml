@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AexSoftTest.Views.BookPage" Title="Каталог книг">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Command="{Binding CreateItemCommand}"/>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="WhiteSmoke">
+            <ListView x:Name="GeneralCollection" ItemsSource="{Binding BookCollection}" SelectedItem="{Binding SelectedItemBook, Mode=TwoWay}" HasUnevenRows="True" SeparatorColor="WhiteSmoke">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.View>
+                                    <StackLayout Orientation="Horizontal" Margin="10,20,10,20" BackgroundColor="White">
+                                    <Image Source="{Binding CoverView}" WidthRequest="145" HeightRequest="120" Margin="7"/>
+                                    <StackLayout>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Название: " FontAttributes="Bold" TextColor="Black" FontSize="18"/>
+                                                    <Span Text="{Binding Name}" FontSize="18"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Автор: " FontAttributes="Bold" TextColor="Black" FontSize="18"/>
+                                                    <Span Text="{Binding Autor}" FontSize="18"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Жанр: " FontAttributes="Bold" TextColor="Black" FontSize="18"/>
+                                                    <Span Text="{Binding Genre}" FontSize="18"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Ряд: " FontAttributes="Bold" TextColor="Black" FontSize="18"/>
+                                                    <Span Text="{Binding Row}" FontSize="18"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Стелаж: " FontAttributes="Bold" TextColor="Black" FontSize="18"/>
+                                                    <Span Text="{Binding Rack}" FontSize="18"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                        <Label>
+                                            <Label.FormattedText>
+                                                <FormattedString>
+                                                    <Span Text="Полка: " FontAttributes="Bold" TextColor="Black" FontSize="18"/>
+                                                    <Span Text="{Binding Shelf}" FontSize="16"/>
+                                                </FormattedString>
+                                            </Label.FormattedText>
+                                        </Label>
+                                    </StackLayout>
+                                </StackLayout>
+                            </ViewCell.View>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Label x:Name="SearchTextIsNull" Text="Нет такой книги" IsVisible="{Binding SearchIsNull}" FontSize="30" HeightRequest="1000" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"></Label>
+            <Label x:Name="TextIsNullColletion" Text="В Вашей коллекции пока пусто." IsVisible="{Binding NullCollection}" FontSize="30" HeightRequest="1000" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+            <Label x:Name="ErrorWorkSQL" IsVisible="{Binding VisibleErrorSQL}" Text="Ошибка SQL базы. Данные не удалось получить\сохранить\удалить\изменить" BackgroundColor="Crimson" FontSize="Body"/>
+            <StackLayout Orientation="Horizontal" IsVisible="{Binding IsVisibleSearchPanel}" BackgroundColor="White">
+                <ImageButton Source="setting.png" Clicked="OnTest" Margin="10,0,0,0" WidthRequest="25" HeightRequest="20" BackgroundColor="White"/>
+                <SearchBar x:Name="searchBar" Placeholder="Найти книгу..."
+                   TextChanged="Event_RecoveryDisplayInViewAllCollection"
+                   SearchCommand="{Binding PerformSearchCommand}"
+                   SearchCommandParameter="{Binding Text, Source={x:Reference searchBar}}"
+                   HorizontalTextAlignment="Center"
+                   FontSize="Medium"
+                   FontAttributes="Italic"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
