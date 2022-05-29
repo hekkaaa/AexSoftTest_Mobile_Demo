@@ -20,15 +20,14 @@ namespace Business.Services
 
         public BookBusinessModel GetBookById(int id)
         {
-            Book res = _bookRepository.GetBookById(id);
-
-            if (res == null)
+            try
+            {
+                Book res = _bookRepository.GetBookById(id);
+                return _mapper.MapFromBook(res);
+            }
+            catch (InvalidOperationException)
             {
                 throw new ArgumentException("Нет данных по указанному id");
-            }
-            else
-            {
-                return _mapper.MapFromBook(res);
             }
         }
 
@@ -36,7 +35,6 @@ namespace Business.Services
         {
             List<Book> res = _bookRepository.GetBookAll();
             return _mapper.MapFromListBook(res);
-            
         }
 
         public bool DeleteBook(int id)

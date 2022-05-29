@@ -22,7 +22,7 @@ namespace AexSoftTest.Data.Tests
         }
 
         [Test]
-        public void AddUser()
+        public void AddUserTest()
         {
             //given
             int expected = 1; // Successful execution
@@ -36,7 +36,7 @@ namespace AexSoftTest.Data.Tests
         }
 
         [Test]
-        public void GetUserByName_WhenUserIsInDatabase()
+        public void GetUserByNameTest_WhenUserIsInDatabase()
         {
             //given
             int expectedId = 1; //  execution id
@@ -54,7 +54,7 @@ namespace AexSoftTest.Data.Tests
         }
 
         [Test]
-        public void GetUserByName_WhenUserIsNotInDatabase()
+        public void GetUserByNameTest_WhenUserIsNotInDatabase()
         {
             //given
             _testRepository.AddUser(_testUser);

@@ -42,6 +42,7 @@ namespace Business.Services
         {
             User res = _userRepository.GetUserByName(login);
             string tmpHashPass = ConvertPassHash.ConvertHash(password);
+
             if (res == null)
             {
                 return false;
@@ -50,6 +51,7 @@ namespace Business.Services
             {
                 return false;
             }
+
             ConnectSettings.RenameDatabaseUser(login.ToLower());
             return true;
         }
