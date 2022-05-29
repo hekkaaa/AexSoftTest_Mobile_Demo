@@ -7,11 +7,11 @@ namespace Data.Repositories
 {
     public class BookRepository
     {
-        SQLiteConnection database;
+        private readonly SQLiteConnection database;
 
         public BookRepository()
         {
-            database = new SQLiteConnection(ConnectSettings.PathDatabase);
+            database = new SQLiteConnection(ConnectSettings.PathDatabaseCollection);
             database.CreateTable<Book>();
         }
 

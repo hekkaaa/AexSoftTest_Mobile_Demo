@@ -9,8 +9,8 @@ namespace AexSoftTest
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
-            //MainPage = new LoginPage();
+            //MainPage = new MainPage();
+            MainPage = new LoginPage();
         }
 
         protected override void OnStart()

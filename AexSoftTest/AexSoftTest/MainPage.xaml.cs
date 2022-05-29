@@ -1,5 +1,6 @@
 ﻿using AexSoftTest.ViewModels;
 using AexSoftTest.Views;
+using System;
 using Xamarin.Forms;
 
 namespace AexSoftTest
@@ -10,6 +11,12 @@ namespace AexSoftTest
         {
             InitializeComponent();
             Routing.RegisterRoute(nameof(BookPage), typeof(BookPage));
+            Routing.RegisterRoute(nameof(LoginPage), typeof(LoginPage));
+        }
+
+        private async void ExitForProfileApplication(object sender, EventArgs e)
+        {
+            await Shell.Current.GoToAsync("//LoginPage");
         }
     }
 }

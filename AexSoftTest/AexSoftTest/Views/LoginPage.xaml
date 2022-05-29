@@ -3,8 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AexSoftTest.Views.LoginPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Button VerticalOptions="Center" Text="Login" Command="{Binding LoginCommand}"/>
-        </StackLayout>
+        <Frame Margin="10,0,10,0" VerticalOptions="Center" BackgroundColor="AliceBlue" CornerRadius="15">
+            <StackLayout>
+                <Label Text="Вход" FontSize="Large" HorizontalOptions="Center"/>
+                <Entry x:Name="loginEntry" Placeholder="Логин" Text="{Binding Login}"/>
+                <Entry x:Name="passwordEntry" Placeholder = "Пароль" IsPassword ="True" Text="{Binding Password}"/>
+                <Label x:Name="textLabel" FontSize="Large"/>
+                <Button BackgroundColor="LightSkyBlue" VerticalOptions="Center" Text="Войти" CommandParameter="{Binding Text, loginEntry}" Command="{Binding AuthCommand}"/>
+                <Button BackgroundColor="LightSteelBlue" VerticalOptions="Center" Text="Зарегистрироваться" CommandParameter="{Binding Text, loginEntry}" Command="{Binding NewUserCommand}"/>
+                <Label x:Name="ErrorAuth" IsVisible="{Binding VisibleError}" Text="{Binding TextErrorMessage}" BackgroundColor="OrangeRed" FontSize="Body" Opacity="0.8"/>
+            </StackLayout>
+        </Frame>
     </ContentPage.Content>
 </ContentPage>
