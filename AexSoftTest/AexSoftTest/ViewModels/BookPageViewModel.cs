@@ -124,8 +124,6 @@ namespace AexSoftTest.ViewModels
 
         public ICommand CreateItemCommand => new Command(() =>
         {
-            var s = ConnectSettings.PathDatabaseUser;
-            var s1 = ConnectSettings.PathDatabaseCollection;
             Navigation.PushAsync(new NewItemPage(this));
         });
 

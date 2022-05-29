@@ -28,5 +28,10 @@ namespace Data.Repositories
         {
             return database.Insert(newUser);
         }
+
+        public void Droptable()
+        {
+            database.DropTable<User>();
+        }
     }
 }
