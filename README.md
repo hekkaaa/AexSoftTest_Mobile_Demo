@@ -20,6 +20,9 @@
 
 ![image](https://user-images.githubusercontent.com/46771781/170883667-b2fd7165-ffaa-4e28-9666-9c0b9dd196a8.png)
 
+## Unit-тесты
+![image](https://user-images.githubusercontent.com/46771781/170883907-9cbaa40e-4f92-4b2d-b411-d656f361421b.png)
+
 
 ## ТЗ
 Написать мобильное приложение на C# Xamarin.Forms. Каталог книг в библиотеке.
