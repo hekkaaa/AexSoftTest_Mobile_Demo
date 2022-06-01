@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AexSoftTest\AexSoftTest.csproj" />
     <ProjectReference Include="..\Business\Business.csproj" />
   </ItemGroup>
 
