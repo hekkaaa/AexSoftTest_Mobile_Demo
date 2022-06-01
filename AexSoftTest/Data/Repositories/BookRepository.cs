@@ -13,6 +13,12 @@ namespace Data.Repositories
         {
             database = new SQLiteConnection(ConnectSettings.PathDatabaseCollection);
             database.CreateTable<Book>();
+            database.CreateTable<Ganre>();
+            database.CreateTable<Autor>();
+            database.CreateTable<Storage>();
+            database.CreateTable<BookAutor>();
+            database.CreateTable<BookGanre>();
+            database.CreateTable<CoverView>();
         }
 
         public List<Book> GetBookAll()
