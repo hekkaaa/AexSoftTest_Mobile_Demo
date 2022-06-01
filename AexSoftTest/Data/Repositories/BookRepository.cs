@@ -1,6 +1,7 @@
 ﻿using Data.ConnectDb;
 using Data.Entities;
 using SQLite;
+using SQLiteNetExtensions.Extensions;
 using System.Collections.Generic;
 
 namespace Data.Repositories
@@ -13,22 +14,16 @@ namespace Data.Repositories
         {
             database = new SQLiteConnection(ConnectSettings.PathDatabaseCollection);
             database.CreateTable<Book>();
-            database.CreateTable<Ganre>();
-            database.CreateTable<Autor>();
-            database.CreateTable<Storage>();
-            database.CreateTable<BookAutor>();
-            database.CreateTable<BookGanre>();
-            database.CreateTable<CoverView>();
         }
 
         public List<Book> GetBookAll()
         {
-            return database.Table<Book>().ToList();
+            return database.GetAllWithChildren<Book>();
         }
 
         public Book GetBookById(int id)
         {
-            return database.Get<Book>(id);
+            return database.GetWithChildren<Book>(id);
         }
 
         public int DeleteBook(int id)
@@ -38,18 +33,30 @@ namespace Data.Repositories
 
         public int AddBook(Book item)
         {
-            return database.Insert(item);
+            database.Insert(item);
+            return 1;
         }
 
         public int UpdateBook(Book item)
         {
-            database.Update(item);
+            database.UpdateWithChildren(item);
             return item.Id;
         }
 
         public void Droptable()
         {
             database.DropTable<Book>();
+            database.DropTable<Autor>();
+            database.DropTable<Ganre>();
+            database.DropTable<Storage>();
+            database.DropTable<CoverView>();
+        }
+
+
+        public List<Book> SerchItem(string seachName)
+        {
+            return database.Query<Book>("select * FROM Book b JOIN Ganre g ON b.GanreId = g.Id " +
+                $"JOIN Autor a ON b.AutorId = a.Id WHERE b.Name LIKE '%{seachName}%' OR g.Name LIKE '%{seachName}%' OR a.Name LIKE '%{seachName}%' ");
         }
     }
 }

@@ -12,12 +12,16 @@ namespace Business.Mappers
             {
                 Id = oldItem.Id,
                 Name = oldItem.Name,
-                Autor = oldItem.Autor,
-                CoverView = oldItem.CoverView,
-                Shelf = oldItem.Shelf,
-                Genre = oldItem.Genre,
-                Rack = oldItem.Rack,
-                Row = oldItem.Row
+                AutorId = oldItem.AutorId,
+                Autor = oldItem.Autors.Name,
+                CoverViewId = oldItem.CoverViewId,
+                CoverView = oldItem.CoverView.Path,
+                GenreId = oldItem.GanreId,
+                Genre = oldItem.Ganre.Name,
+                Storageid = oldItem.StorageId,
+                Shelf = oldItem.Storage.Shelf,
+                Rack = oldItem.Storage.Rack,
+                Row = oldItem.Storage.Row
             };
 
             return newItem;
@@ -36,16 +40,19 @@ namespace Business.Mappers
 
         public Book MapInBook(BookBusinessModel oldItem)
         {
+
             Book newItem = new Book
-            {
-                Name = oldItem.Name,
-                Autor = oldItem.Autor,
-                CoverView = oldItem.CoverView,
-                Shelf = oldItem.Shelf,
-                Genre = oldItem.Genre,
+            {   
                 Id = oldItem.Id,
-                Rack = oldItem.Rack,
-                Row = oldItem.Row
+                Name = oldItem.Name,
+                Autors = new Autor { Id = oldItem.AutorId, Name = oldItem.Autor },
+                CoverView = new CoverView { Id = oldItem.CoverViewId, Path = oldItem.CoverView },
+                Ganre = new Ganre { Id = oldItem.GenreId, Name = oldItem.Genre },
+                Storage = new Storage { Id = oldItem.Storageid, Rack = oldItem.Rack, Row = oldItem.Row, Shelf = oldItem.Shelf },
+                AutorId = oldItem.AutorId,
+                CoverViewId = oldItem.CoverViewId,
+                StorageId = oldItem.Storageid,
+                GanreId = oldItem.GenreId
             };
 
             return newItem;
@@ -61,5 +68,7 @@ namespace Business.Mappers
             }
             return newListItem;
         }
+
+       
     }
 }

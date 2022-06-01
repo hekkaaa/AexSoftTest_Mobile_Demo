@@ -1,4 +1,5 @@
-﻿using Data.ConnectDb;
+﻿using Business.Services;
+using Data.ConnectDb;
 using Data.Entities;
 using Data.Repositories;
 
@@ -7,23 +8,26 @@ namespace AexSoftTest.Data.Tests
     public class BookRepositoryTests
     {
         private BookRepository _testRepository;
+        private AutorRepository _autorRepository;
+        private GanreRepository _ganreRepository;
+        private StorageRepository _storageRepository;
+        private CoverViewRepository _coverViewRepository;
+
         private Book _testItem;
 
         [SetUp]
         public void Setup()
         {
-            _testRepository = new BookRepository();
             ConnectSettings.RenameDatabaseUser("testuser");
+
             RestartDB();
 
             _testItem = new Book()
             {
-                Autor = "С.Кинг",
-                Genre = "Роман",
+                Autors = new Autor { Name = "С.Кинг" },
+                Ganre = new Ganre { Name = "Роман" },
                 Name = "Мобильник",
-                Rack = "12",
-                Shelf = "2",
-                Row = "3"
+                Storage = new Storage { Rack = "12", Shelf = "2", Row = "3" }
             };
         }
 
@@ -32,10 +36,10 @@ namespace AexSoftTest.Data.Tests
         {
             //given
             int expected = 1; // Successful execution
-
+          
             ////when
             int actual = _testRepository.AddBook(_testItem);
-
+            
             ////then 
             Assert.NotNull(actual);
             Assert.That(actual, Is.EqualTo(expected));
@@ -48,12 +52,10 @@ namespace AexSoftTest.Data.Tests
             Book expected = new Book()
             {
                 Id = 1,
-                Autor = "Эрих Мария Ремарк",
-                Genre = "Роман",
+                Autors = new Autor { Name = "Эрих Мария Ремарк" },
+                Ganre = new Ganre { Name = "Роман" },
                 Name = "Ночь в Лиссабоне",
-                Rack = "23",
-                Shelf = "1",
-                Row = "45"
+                Storage = new Storage { Rack = "23", Shelf = "1", Row = "45" }
             };
 
             int successUpdate = 1; // Successful execution
@@ -68,11 +70,6 @@ namespace AexSoftTest.Data.Tests
             Assert.That(actual, Is.EqualTo(successUpdate));
             Assert.AreEqual(expected.Id, postActual.Id);
             Assert.AreEqual(expected.Name, postActual.Name);
-            Assert.AreEqual(expected.Genre, postActual.Genre);
-            Assert.AreEqual(expected.Rack, postActual.Rack);
-            Assert.AreEqual(expected.Row, postActual.Row);
-            Assert.AreEqual(expected.Shelf, postActual.Shelf);
-            Assert.AreEqual(expected.Autor, postActual.Autor);
         }
 
         [Test]
@@ -126,18 +123,18 @@ namespace AexSoftTest.Data.Tests
             Assert.NotNull(actual);
             Assert.AreEqual(idNewBook, actual.Id);
             Assert.AreEqual(expected.Name, actual.Name);
-            Assert.AreEqual(expected.Genre, actual.Genre);
-            Assert.AreEqual(expected.Autor, actual.Autor);
-            Assert.AreEqual(expected.Row, actual.Row);
-            Assert.AreEqual(expected.Rack, actual.Rack);
-            Assert.AreEqual(expected.Shelf, actual.Shelf);
         }
 
         private void RestartDB()
         {
             _testRepository = new BookRepository();
+            
             _testRepository.Droptable();
             _testRepository = new BookRepository();
+            _autorRepository = new AutorRepository();
+            _storageRepository = new StorageRepository();
+            _ganreRepository = new GanreRepository();
+            _coverViewRepository = new CoverViewRepository();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Business.Mappers;
 using Business.Models;
+using Data.ConnectDb;
 using Data.Entities;
 using Data.Repositories;
 using System;
@@ -8,13 +9,21 @@ using System.Collections.Generic;
 namespace Business.Services
 {
     public class BookService
-    {
+    {   
+        private readonly AutorRepository _autorRepository;
         private readonly BookRepository _bookRepository;
+        private readonly GanreRepository _ganreRepository;
+        private readonly StorageRepository _storageRepository;
+        private readonly CoverViewRepository _coverViewRepository;
         private readonly BusinessMapper _mapper;
 
         public BookService()
         {
             _bookRepository = new BookRepository();
+            _autorRepository = new AutorRepository();
+            _storageRepository = new StorageRepository();
+            _ganreRepository = new GanreRepository();
+            _coverViewRepository = new CoverViewRepository();
             _mapper = new BusinessMapper();
         }
 
@@ -54,9 +63,47 @@ namespace Business.Services
         public bool AddBook(BookBusinessModel newitem)
         {
             if (newitem.CoverView == null) newitem.CoverView = "defaultbook.jpg";
-            
-            int res = _bookRepository.AddBook(_mapper.MapInBook(newitem));
 
+            Autor tmpAutor = new Autor { Name = newitem.Autor };
+            Storage tmpStorage = new Storage { Rack = newitem.Rack, Row = newitem.Row, Shelf = newitem.Shelf };
+            Ganre tmpGanre = new Ganre { Name = newitem.Genre };
+            CoverView tmpCoverView = new CoverView { Path = newitem.CoverView };
+
+            _autorRepository.AddAutor(tmpAutor);
+            _storageRepository.AddStorage(tmpStorage);
+            _ganreRepository.AddGanre(tmpGanre);
+            _coverViewRepository.AddCoverView(tmpCoverView);
+
+            var tmpItem = _mapper.MapInBook(newitem);
+            int res = _bookRepository.AddBook(tmpItem);
+
+            if (res == 0)
+            {
+                return false;
+            }
+            else
+            {
+                tmpItem.Storage = tmpStorage;
+                tmpItem.Autors = tmpAutor;
+                tmpItem.CoverView = tmpCoverView;
+                tmpItem.Ganre = tmpGanre;
+
+                _bookRepository.UpdateBook(tmpItem);
+
+                return true;
+            }
+        }
+
+        public bool UpdateBook(BookBusinessModel updateItem)
+        {
+            Book tmpBook = _mapper.MapInBook(updateItem);
+
+            _autorRepository.UpdateAutor(tmpBook.Autors);
+            _ganreRepository.UpdateGanre(tmpBook.Ganre);
+            _coverViewRepository.UpdateCoverView(tmpBook.CoverView);
+            _storageRepository.UpdateStorage(tmpBook.Storage);
+
+            var res = _bookRepository.UpdateBook(tmpBook);
             if (res == 0)
             {
                 return false;
@@ -67,17 +114,17 @@ namespace Business.Services
             }
         }
 
-        public bool UpdateBook(BookBusinessModel updateItem)
+        public List<BookBusinessModel> SearchItem(string searchName)
         {
-            var res = _bookRepository.UpdateBook(_mapper.MapInBook(updateItem));
-            if (res == 0)
+            var tmpCollection = _bookRepository.SerchItem(searchName);
+            List <BookBusinessModel> resultList = new List<BookBusinessModel>();
+
+            foreach (Book item in tmpCollection)
             {
-                return false;
+                BookBusinessModel mapItem = _mapper.MapFromBook(_bookRepository.GetBookById(item.Id));
+                resultList.Add(mapItem);
             }
-            else
-            {
-                return true;
-            }
+            return resultList;
         }
 
         public void Droptable()

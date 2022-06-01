@@ -7,7 +7,6 @@ namespace Data.Entities
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
         public string Path { get; set; }
     }
 }

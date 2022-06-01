@@ -11,10 +11,7 @@ namespace Data.Entities
     {
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-
         public string Name { get; set; }
 
-        [ManyToMany(typeof(BookGanre))]
-        public List<Book> BookId { get; set; }
     }
 }

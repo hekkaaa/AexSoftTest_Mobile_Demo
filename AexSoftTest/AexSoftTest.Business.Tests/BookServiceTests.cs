@@ -14,6 +14,10 @@ namespace AexSoftTest.Business.Tests
         private BookService _testBookService;
         private BookRepository _testBookRepository;
         private BookBusinessModel _testItem;
+        private AutorRepository _autorRepository;
+        private GanreRepository _ganreRepository;
+        private StorageRepository _storageRepository;
+        private CoverViewRepository _coverViewRepository;
 
         [SetUp]
         public void Setup()
@@ -147,17 +151,15 @@ namespace AexSoftTest.Business.Tests
         {
             //given
             _testBookService.AddBook(_testItem);
+            var expected = _testBookService.GetBookById(1);
 
-            var expected = new BookBusinessModel()
-            {
-                Id = 1,
-                Autor = "Стивен Кинг",
-                Name = "Мобильник",
-                Genre = "Роман",
-                Shelf = "1",
-                Rack = "7",
-                Row = "90"
-            };
+            expected.Autor = "Стивен Кинг";
+            expected.Name = "Мобильник";
+            expected.Genre = "Роман";
+            expected.Shelf = "1";
+            expected.Rack = "7";
+            expected.Row = "90";
+
 
             ////when
             bool actual = _testBookService.UpdateBook(expected);
@@ -180,6 +182,10 @@ namespace AexSoftTest.Business.Tests
             _testBookRepository = new BookRepository();
             _testBookRepository.Droptable();
             _testBookRepository = new BookRepository();
+            _autorRepository = new AutorRepository();
+            _storageRepository = new StorageRepository();
+            _ganreRepository = new GanreRepository();
+            _coverViewRepository = new CoverViewRepository();
         }
     }
 }
