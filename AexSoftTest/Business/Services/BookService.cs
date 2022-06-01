@@ -1,6 +1,5 @@
 ﻿using Business.Mappers;
 using Business.Models;
-using Data.ConnectDb;
 using Data.Entities;
 using Data.Repositories;
 using System;
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 namespace Business.Services
 {
     public class BookService
-    {   
+    {
         private readonly AutorRepository _autorRepository;
         private readonly BookRepository _bookRepository;
         private readonly GanreRepository _ganreRepository;
@@ -96,7 +95,17 @@ namespace Business.Services
 
         public bool UpdateBook(BookBusinessModel updateItem)
         {
-            Book tmpBook = _mapper.MapInBook(updateItem);
+            BookBusinessModel tmpBusinessBook = _mapper.MapFromBook(_bookRepository.GetBookById(updateItem.Id));
+
+            tmpBusinessBook.Name = updateItem.Name;
+            tmpBusinessBook.Autor = updateItem.Autor;
+            tmpBusinessBook.Genre = updateItem.Genre;
+            tmpBusinessBook.CoverView = updateItem.CoverView;
+            tmpBusinessBook.Shelf = updateItem.Shelf;
+            tmpBusinessBook.Rack = updateItem.Rack;
+            tmpBusinessBook.Row = updateItem.Row;
+
+            Book tmpBook = _mapper.MapInBook(tmpBusinessBook);
 
             _autorRepository.UpdateAutor(tmpBook.Autors);
             _ganreRepository.UpdateGanre(tmpBook.Ganre);
@@ -117,7 +126,7 @@ namespace Business.Services
         public List<BookBusinessModel> SearchItem(string searchName)
         {
             var tmpCollection = _bookRepository.SerchItem(searchName);
-            List <BookBusinessModel> resultList = new List<BookBusinessModel>();
+            List<BookBusinessModel> resultList = new List<BookBusinessModel>();
 
             foreach (Book item in tmpCollection)
             {

@@ -2,10 +2,8 @@
 using AexSoftTest.Models;
 using AexSoftTest.Views;
 using Business.Services;
-using Data.ConnectDb;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -41,10 +39,10 @@ namespace AexSoftTest.ViewModels
         public ObservableCollection<BookModel> BookCollection
         {
             get { return _bookCollection; }
-            set 
-            { 
-                _bookCollection = value; 
-                OnPropertyChanged("BookCollection"); 
+            set
+            {
+                _bookCollection = value;
+                OnPropertyChanged("BookCollection");
             }
         }
 
@@ -174,8 +172,9 @@ namespace AexSoftTest.ViewModels
         public ICommand EditItemCommand => new Command<NewItemPageViewModel>((NewItemPageViewModel obj) =>
         {
             BookModel itemBookModel = obj.BookItem;
+
             bool resultUpdate = _bookService.UpdateBook(_mapper.MapInBookBusinessModel(itemBookModel));
-           
+
             if (resultUpdate)
             {
                 UpdateCollectionView();
@@ -190,8 +189,7 @@ namespace AexSoftTest.ViewModels
 
         public ICommand PerformSearchCommand => new Command<string>((string textQuery) =>
         {
-            ObservableCollection<BookModel> tmpResult;
-            SelectionSettingSearch(out tmpResult, textQuery);
+            ObservableCollection<BookModel> tmpResult = _mapper.MapFromListBookBusinessModel(_bookService.SearchItem(textQuery));
 
             if (tmpResult.Count > 0)
             {
@@ -243,7 +241,7 @@ namespace AexSoftTest.ViewModels
             {
                 MessageNullCollection(true);
             }
-            else 
+            else
             {
                 MessageNullCollection(false);
             }
@@ -254,22 +252,6 @@ namespace AexSoftTest.ViewModels
             NullCollection = values;
             if (!values) { IsVisibleSearchPanel = "true"; }
             else { IsVisibleSearchPanel = "false"; }
-        }
-
-        private void SelectionSettingSearch(out ObservableCollection<BookModel> tmpResult , string textQuery)
-        {
-            if (SearchBy == "Названию")
-            {
-                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Name.Split(' ', ',').Any(word => word.ToLower() == textQuery.ToLower())));
-            }
-            else if (SearchBy == "Автору")
-            {
-                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Autor.Split(' ', ',', '.').Any(word => word.ToLower() == textQuery.ToLower())));
-            }
-            else
-            {
-                tmpResult = new ObservableCollection<BookModel>(_bookCollection.Where(x => x.Genre.Split(' ', ',').Any(word => word.ToLower() == textQuery.ToLower())));
-            }
         }
     }
 }

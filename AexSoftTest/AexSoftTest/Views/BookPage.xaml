@@ -73,8 +73,6 @@
             <Label x:Name="SearchTextIsNull" Text="Нет такой книги" IsVisible="{Binding SearchIsNull}" FontSize="30" HeightRequest="1000" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"></Label>
             <Label x:Name="TextIsNullColletion" Text="В Вашей коллекции пока пусто." IsVisible="{Binding NullCollection}" FontSize="30" HeightRequest="1000" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
             <Label x:Name="ErrorWorkSQL" IsVisible="{Binding VisibleErrorSQL}" Text="Ошибка SQL базы. Данные не удалось получить\сохранить\удалить\изменить" BackgroundColor="Crimson" FontSize="Body"/>
-            <StackLayout Orientation="Horizontal" IsVisible="{Binding IsVisibleSearchPanel}" BackgroundColor="White">
-                <ImageButton Source="setting.png" Clicked="OnTest" Margin="10,0,0,0" WidthRequest="25" HeightRequest="20" BackgroundColor="White"/>
                 <SearchBar x:Name="searchBar" Placeholder="Найти книгу..."
                    TextChanged="Event_RecoveryDisplayInViewAllCollection"
                    SearchCommand="{Binding PerformSearchCommand}"
@@ -82,7 +80,6 @@
                    HorizontalTextAlignment="Center"
                    FontSize="Medium"
                    FontAttributes="Italic"/>
-            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
