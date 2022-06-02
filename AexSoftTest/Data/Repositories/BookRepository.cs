@@ -53,10 +53,13 @@ namespace Data.Repositories
         }
 
 
-        public List<Book> SerchItem(string seachName)
+        public List<Book> SerchItem(string searchName)
         {
-            return database.Query<Book>("select * FROM Book b JOIN Ganre g ON b.GanreId = g.Id " +
-                $"JOIN Autor a ON b.AutorId = a.Id WHERE b.Name LIKE '%{seachName}%' OR g.Name LIKE '%{seachName}%' OR a.Name LIKE '%{seachName}%' ");
+            string tmpSearchText = "%" + searchName + "%";
+          
+            var res = database.Query<Book>("select * FROM Book b JOIN Ganre g ON b.GanreId = g.Id " +
+            $"JOIN Autor a ON b.AutorId = a.Id WHERE b.Name LIKE ?1 OR g.Name LIKE ?1 OR a.Name LIKE ?1 ", tmpSearchText);
+            return res;
         }
     }
 }
